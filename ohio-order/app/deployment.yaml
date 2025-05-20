@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ohio-order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ohio-order
+  template:
+    metadata:
+      labels:
+        app: ohio-order
+    spec:
+      containers:
+        - name: ohio-order
+          image: ohio-order:latest
+          imagePullPolicy: Never # use local images
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              value: jdbc:postgresql://ohio-db:5432/ohio_order
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ohio-order-secret
+                  key: DB_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ohio-order-secret
+                  key: DB_PASSWORD

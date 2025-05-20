@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sigma-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sigma-auth
+  template:
+    metadata:
+      labels:
+        app: sigma-auth
+    spec:
+      containers:
+        - name: sigma-auth
+          image: sigma-auth:latest
+          imagePullPolicy: Never # use local images
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              value: postgres://postgres:postgres@sigma-db:5432/sigma_auth

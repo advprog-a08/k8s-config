@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a08-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: a08-proxy
+  template:
+    metadata:
+      labels:
+        app: a08-proxy
+    spec:
+      containers:
+        - name: a08-proxy
+          image: a08-proxy:latest
+          imagePullPolicy: Never # use local images
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MEWING_MENU_URL
+              value: "http://mewing-menu.default.svc.cluster.local:8080/api"
+            - name: OHIO_ORDER_URL
+              value: "http://ohio-order.default.svc.cluster.local:8080/api"
+            - name: SIGMA_AUTH_URL
+              value: "http://sigma-auth.default.svc.cluster.local:8000/api"
+            - name: PORT
+              value: "5000"

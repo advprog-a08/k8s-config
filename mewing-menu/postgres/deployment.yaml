@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mewing-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mewing-db
+  template:
+    metadata:
+      labels:
+        app: mewing-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:17
+          env:
+            - name: POSTGRES_DB
+              value: mewing_menu
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mewing-menu-secret
+                  key: DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mewing-menu-secret
+                  key: DB_PASSWORD
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-storage
+          emptyDir: {}

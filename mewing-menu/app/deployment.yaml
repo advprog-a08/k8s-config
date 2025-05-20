@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mewing-menu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mewing-menu
+  template:
+    metadata:
+      labels:
+        app: mewing-menu
+    spec:
+      containers:
+        - name: mewing-menu
+          image: mewing-menu:latest
+          imagePullPolicy: Never # use local images
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              value: jdbc:postgresql://mewing-db:5432/mewing_menu
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mewing-menu-secret
+                  key: DB_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mewing-menu-secret
+                  key: DB_PASSWORD
