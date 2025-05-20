@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ohio-order
+  name: ohio-db
 spec:
   selector:
-    app: ohio-order
+    app: ohio-db
   ports:
     - port: 5432
       targetPort: 5432
