@@ -21,18 +21,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: prometheus-stack-prometheus
+                name: prometheus-stack-kube-prom-prometheus
                 port:
-                  number: 9100
-
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: redirect-prometheus
-  namespace: default # same namespace as your Ingress
-spec:
-  redirectRegex:
-    regex: ^/prometheus$$
-    replacement: /prometheus/
-    permanent: true
+                  number: 31086
