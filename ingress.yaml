@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: proxy-ingress
   namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-prometheus@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
@@ -21,4 +23,16 @@ spec:
               service:
                 name: prometheus-stack-prometheus
                 port:
-                  number: 9100
+                  number: 9090 # Corrected port
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-prometheus
+  namespace: default # same namespace as your Ingress
+spec:
+  redirectRegex:
+    regex: ^/prometheus$$
+    replacement: /prometheus/
+    permanent: true
