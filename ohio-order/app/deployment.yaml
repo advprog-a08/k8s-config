@@ -15,7 +15,7 @@ spec:
       containers:
         - name: ohio-order
           image: andrew4coding/ohio-order:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:

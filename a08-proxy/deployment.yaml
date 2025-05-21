@@ -15,7 +15,7 @@ spec:
       containers:
         - name: a08-proxy
           image: andrew4coding/a08-proxy:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:

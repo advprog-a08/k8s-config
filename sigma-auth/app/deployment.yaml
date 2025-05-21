@@ -15,7 +15,7 @@ spec:
       containers:
         - name: sigma-auth
           image: andrew4coding/sigma-auth:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 50051
           env:
