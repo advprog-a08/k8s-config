@@ -15,7 +15,7 @@ spec:
       containers:
         - name: a08-proxy
           image: 327112328955.dkr.ecr.us-east-1.amazonaws.com/proxy:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
           env:
