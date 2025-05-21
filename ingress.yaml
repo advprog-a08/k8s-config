@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: proxy-ingress
-  namespace: default
+  namespace: default # Ingress is still in the default namespace
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: default-redirect-prometheus@kubernetescrd
 spec:
@@ -24,3 +24,4 @@ spec:
                 name: prometheus-stack-kube-prom-prometheus
                 port:
                   number: 31086
+                namespace: monitoring # Specify the namespace of the Prometheus service
