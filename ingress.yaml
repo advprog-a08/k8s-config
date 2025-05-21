@@ -4,7 +4,7 @@ metadata:
   name: proxy-ingress
   namespace: default
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: monitoring-redirect-prometheus@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-prometheus@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
