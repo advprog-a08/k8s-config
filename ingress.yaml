@@ -8,10 +8,17 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /v1
             pathType: Prefix
             backend:
               service:
                 name: a08-proxy
                 port:
                   number: 5000
+          - path: /prometheus
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus-stack-prometheus
+                port:
+                  number: 9100
