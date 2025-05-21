@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ohio-order
-          image: 327112328955.dkr.ecr.us-east-1.amazonaws.com/ohio-order:latest
+          image: ohio-order:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

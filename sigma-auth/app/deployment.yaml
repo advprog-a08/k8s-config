@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: sigma-auth
-          image: 327112328955.dkr.ecr.us-east-1.amazonaws.com/sigma-auth:latest
+          image: sigma-auth:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
