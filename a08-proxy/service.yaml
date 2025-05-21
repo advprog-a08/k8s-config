@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: a08-proxy
 spec:
-  type: NodePort             # or LoadBalancer if on cloud
   selector:
     app: a08-proxy
   ports:
-    - port: 5000
+    - protocol: TCP
+      port: 5000
       targetPort: 5000
-      nodePort: 30000
+  type: LoadBalancer
