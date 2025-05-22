@@ -1,17 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api-ingress
+  name: proxy-ingress
   namespace: default
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-prometheus@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
-    - host: api.rizzserve.site
-      http:
+    - http:
         paths:
-          - path: /
+          - path: /v1/
             pathType: Prefix
             backend:
               service:
