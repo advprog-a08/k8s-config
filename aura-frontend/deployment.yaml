@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aura-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aura-frontend
+  template:
+    metadata:
+      labels:
+        app: aura-frontend
+    spec:
+      containers:
+        - name: aura-frontend
+          image: andrew4coding/aura-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
