@@ -15,7 +15,7 @@ spec:
       containers:
         - name: mewing-menu
           image: andrew4coding/mewing-menu:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
