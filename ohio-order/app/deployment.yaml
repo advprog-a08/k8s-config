@@ -21,6 +21,11 @@ spec:
           env:
             - name: DATABASE_URL
               value: jdbc:postgresql://ohio-db:5432/ohio_order
+            - name: MENU_SERVICE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ohio-order-secret
+                  key: MENU_SERVICE_URL
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
