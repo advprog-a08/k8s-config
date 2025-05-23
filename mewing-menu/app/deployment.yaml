@@ -20,7 +20,7 @@ spec:
             - containerPort: 8080
           env:
             - name: DATABASE_URL
-              value: jdbc:postgresql://mewing-db:5432/mewing_menu
+              value: jdbc:postgresql://mewing-db.default.svc.cluster.local:5432/mewing_menu
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:

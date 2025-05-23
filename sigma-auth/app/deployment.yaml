@@ -20,4 +20,4 @@ spec:
             - containerPort: 50051
           env:
             - name: DATABASE_URL
-              value: postgres://postgres:postgres@sigma-db:5432/sigma_auth
+              value: postgres://postgres:postgres@sigma-db.default.svc.cluster.local:5432/sigma_auth
