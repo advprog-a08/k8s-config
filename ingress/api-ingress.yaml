@@ -11,7 +11,7 @@ spec:
     - host: api.rizzserve.site
       http:
         paths:
-          - path: /v1/
+          - path: /
             pathType: Prefix
             backend:
               service:
