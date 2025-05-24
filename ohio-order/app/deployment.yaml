@@ -20,7 +20,7 @@ spec:
             - containerPort: 8080
           env:
             - name: DATABASE_URL
-              value: jdbc:postgresql://ohio-db.default.svc.cluster.local:5432/ohio_order
+              value: jdbc:postgresql://ohio-db:5432/ohio_order
             - name: MENU_SERVICE_URL
               valueFrom:
                 secretKeyRef:

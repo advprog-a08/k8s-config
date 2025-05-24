@@ -1,0 +1,112 @@
+services:
+  mewing-db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: mewing_menu
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - mewing-db-data:/var/lib/postgresql/data
+
+  mewing-menu:
+    image: andrew4coding/mewing-menu:latest
+    ports:
+      - "8081:8080"  # Avoid port conflicts if you're running other things locally
+    environment:
+      DATABASE_URL: jdbc:postgresql://mewing-db:5432/mewing_menu
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+    depends_on:
+      - mewing-db
+
+  ohio-db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ohio_order
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"  # Avoid port conflicts
+    volumes:
+      - ohio-db-data:/var/lib/postgresql/data
+
+  ohio-order:
+    image: andrew4coding/ohio-order:latest
+    ports:
+      - "8082:8080" # Avoid port conflicts
+    environment:
+      DATABASE_URL: jdbc:postgresql://ohio-db:5432/ohio_order
+      MENU_SERVICE_URL: http://mewing-menu:8080
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+    depends_on:
+      - ohio-db
+      - mewing-menu # Crucial dependency
+
+  sigma-db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: sigma_auth
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432" # Avoid port conflicts
+    volumes:
+      - sigma-db-data:/var/lib/postgresql/data
+
+  sigma-auth:
+    image: andrew4coding/sigma-auth:latest
+    ports:
+      - "8000:8000" # Or 50051 if your app exposes that as well
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@sigma-db:5432/sigma_auth
+    depends_on:
+      - sigma-db
+
+  a08-proxy:
+    image: andrew4coding/a08-proxy:latest
+    ports:
+      - "5000:5000"
+    environment:
+      MEWING_MENU_URL: http://mewing-menu:8080/api
+      OHIO_ORDER_URL: http://ohio-order:8080/api
+      SIGMA_AUTH_URL: http://sigma-auth:8000
+      PORT: 5000
+    depends_on:
+      - mewing-menu
+      - ohio-order
+      - sigma-auth
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus_data:/prometheus
+      - .:/etc/prometheus # Mounts the current directory
+    depends_on:
+      - mewing-menu # Add any services you want to monitor
+      - ohio-order
+      - sigma-auth
+      - a08-proxy
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000" # Avoid port conflict with the frontend
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin  # Set Grafana credentials
+      GF_SECURITY_ADMIN_PASSWORD: password  # Change this to a strong password
+    depends_on:
+      - prometheus
+      
+volumes:
+  mewing-db-data:
+  ohio-db-data:
+  sigma-db-data:
+  prometheus_data:
+  grafana_data:
