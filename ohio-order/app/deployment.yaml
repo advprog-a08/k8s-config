@@ -22,17 +22,8 @@ spec:
             - name: DATABASE_URL
               value: jdbc:postgresql://ohio-db:5432/ohio_order
             - name: MENU_SERVICE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: ohio-order-secret
-                  key: MENU_SERVICE_URL
+              value: http://mewing-menu:8080
             - name: DATABASE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: ohio-order-secret
-                  key: DB_USER
+              value: postgres
             - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ohio-order-secret
-                  key: DB_PASSWORD
+              value: postgres

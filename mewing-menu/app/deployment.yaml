@@ -22,12 +22,6 @@ spec:
             - name: DATABASE_URL
               value: jdbc:postgresql://mewing-db:5432/mewing_menu
             - name: DATABASE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: mewing-menu-secret
-                  key: DB_USER
+              value: postgres
             - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mewing-menu-secret
-                  key: DB_PASSWORD
+              value: postgres
