@@ -18,6 +18,8 @@ services:
       DATABASE_URL: jdbc:postgresql://mewing-db:5432/mewing_menu
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
+    logging:
+      driver: "json-file"
     depends_on:
       - mewing-db
 
@@ -28,7 +30,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5433:5432"  # Avoid port conflicts
+      - "5433:5432"
     volumes:
       - ohio-db-data:/var/lib/postgresql/data
 
@@ -41,6 +43,8 @@ services:
       MENU_SERVICE_URL: http://mewing-menu:8080
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
+    logging:
+      driver: "json-file"
     depends_on:
       - ohio-db
       - mewing-menu # Crucial dependency
@@ -62,6 +66,8 @@ services:
       - "8000:8000" # Or 50051 if your app exposes that as well
     environment:
       DATABASE_URL: postgres://postgres:postgres@sigma-db:5432/sigma_auth
+    logging:
+      driver: "json-file"
     depends_on:
       - sigma-db
 
@@ -74,6 +80,8 @@ services:
       OHIO_ORDER_URL: http://ohio-order:8080/api
       SIGMA_AUTH_URL: http://sigma-auth:8000
       PORT: 5000
+    logging:
+      driver: "json-file"
     depends_on:
       - mewing-menu
       - ohio-order
@@ -88,7 +96,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     depends_on:
-      - mewing-menu # Add any services you want to monitor
+      - mewing-menu
       - ohio-order
       - sigma-auth
       - a08-proxy
@@ -104,6 +112,24 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: password  # Change this to a strong password
     depends_on:
       - prometheus
+      - loki
+  
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/loki-config.yml
+    volumes:
+      - ./loki/loki-config.yml:/etc/loki/loki-config.yml
+  
+  promtail:
+    image: grafana/promtail:2.9.0
+    volumes:
+      - ./promtail/promtail-config.yml:/etc/promtail/config.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/log:/var/log:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yml
       
 volumes:
   mewing-db-data:
