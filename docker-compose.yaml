@@ -18,8 +18,6 @@ services:
       DATABASE_URL: jdbc:postgresql://mewing-db:5432/mewing_menu
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
-    logging:
-      driver: "json-file"
     depends_on:
       - mewing-db
 
@@ -43,8 +41,6 @@ services:
       MENU_SERVICE_URL: http://mewing-menu:8080
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
-    logging:
-      driver: "json-file"
     depends_on:
       - ohio-db
       - mewing-menu # Crucial dependency
@@ -66,8 +62,6 @@ services:
       - "8000:8000" # Or 50051 if your app exposes that as well
     environment:
       DATABASE_URL: postgres://postgres:postgres@sigma-db:5432/sigma_auth
-    logging:
-      driver: "json-file"
     depends_on:
       - sigma-db
 
@@ -80,8 +74,6 @@ services:
       OHIO_ORDER_URL: http://ohio-order:8080/api
       SIGMA_AUTH_URL: http://sigma-auth:8000
       PORT: 5000
-    logging:
-      driver: "json-file"
     depends_on:
       - mewing-menu
       - ohio-order
