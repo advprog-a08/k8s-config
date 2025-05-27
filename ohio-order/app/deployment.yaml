@@ -17,7 +17,7 @@ spec:
           image: andrew4coding/ohio-order:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
           env:
             - name: DATABASE_URL
               value: jdbc:postgresql://ohio-db:5432/ohio_order
