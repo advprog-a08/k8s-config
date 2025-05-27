@@ -7,8 +7,8 @@ spec:
     app: sigma-auth
   ports:
     - name: rest
-      port: 8002
-      targetPort: 8002
+      port: 8082
+      targetPort: 8082
     - name: grpc
       port: 50051
       targetPort: 50051
