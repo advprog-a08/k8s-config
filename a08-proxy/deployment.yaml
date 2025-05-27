@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: a08-proxy
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: a08-proxy

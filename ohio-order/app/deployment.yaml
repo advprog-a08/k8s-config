@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: ohio-order
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: ohio-order
