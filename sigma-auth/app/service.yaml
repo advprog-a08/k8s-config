@@ -6,7 +6,10 @@ spec:
   selector:
     app: sigma-auth
   ports:
-    - port: 8000
-      targetPort: 8000
+    - name: rest
+      port: 8002
+      targetPort: 8002
+    - name: grpc
+      port: 50051
+      targetPort: 50051
   type: LoadBalancer
-    

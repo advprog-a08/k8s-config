@@ -18,6 +18,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 50051
+            - containerPort: 8082
           env:
             - name: DATABASE_URL
               value: postgres://postgres:postgres@sigma-db:5432/sigma_auth
