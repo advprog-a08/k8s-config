@@ -27,3 +27,7 @@ spec:
               value: postgres
             - name: DATABASE_PASSWORD
               value: postgres
+            - name: SIGMA_AUTHENTICATION_GRPC_HOST
+              value: sigma-auth.default.svc.cluster.local
+            - name: SIGMA_AUTHENTICATION_GRPC_PORT
+              value: "50051"
